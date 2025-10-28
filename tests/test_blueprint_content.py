@@ -1,5 +1,8 @@
 """This is a test script to test flask application"""
-from wsgi import app
+
+import pytest              # third-party import first
+from application.app import app  # first-party import second
+
 
 
 
@@ -11,8 +14,12 @@ def create_client():
 
 def test_main_page_content(client):
     """flask unit testing for content in default page"""
-
+    response = client.get('/')
+    assert response.status_code == 200
+    assert b'Blueprint' in response.data
 
 def test_about_page_content(client):
     """flask unit testing for content in about page"""
-
+    response = client.get('/about')
+    assert response.status_code == 200
+    assert b'Blueprint' in response.data
